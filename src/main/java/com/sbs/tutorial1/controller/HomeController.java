@@ -2,6 +2,7 @@ package com.sbs.tutorial1.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -29,4 +30,25 @@ public class HomeController {
     public String showHome3(){
         return "스프링부트 획기적이다.";
     }
+
+    @GetMapping("/home/plus")
+    @ResponseBody
+    // @RequestParam은 생략 가능 (int a 는 생략되어있는 상태)
+    // Settings에 Java Compiler 에서 Additional command line parameters에 *parameters를 입력하지않으면 전부 붙여줘야함
+    // @RequestParam(defaultValue = "10") : b라는 이름으로 파라미터를 넘기지 않으면 기본값 10으로 b에 입력됨
+    // DefaultValue = "값" 입력해주면 기본값으로 사용 가능
+    // 웹 브라우저는 데이터형을 무조건 String으로 인식 -> 내가 정수값으로 리턴해도 화면에서는 문자열 형식으로 출력된다.
+    public int showPlus(int a, @RequestParam(defaultValue = "10") int b){
+
+        return a+b;
+    }
+
+
+
+
+
+
+
+
+
 }
