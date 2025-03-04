@@ -17,6 +17,14 @@ import java.util.*;
 // 이 클래스는 웹 요청을 받아서 작업을 한다.
 // 해당 클래스는 컨트롤러야!
 public class HomeController {
+    List<Person> personList;
+
+    public HomeController(){
+
+        personList = new ArrayList<>();
+    }
+
+
     @GetMapping("/home/main")
     // 개발자가 /home/main 이르는 요청을 보내면 아래 메서드를 실행
     @ResponseBody
@@ -171,6 +179,7 @@ public class HomeController {
     @GetMapping("/home/returnArticleMapList")
     @ResponseBody
     public List<Map<String,Object>> showReturnMapList(){
+        //객체 자체를 출력하나 , 맵 으로 출력하나 결과는 동일하다.
         Map<String,Object> articleMap1 =new LinkedHashMap<>(){{
             put("id",1);
             put("subject","제목1");
@@ -236,9 +245,69 @@ public class HomeController {
     };
 
 
+    @GetMapping("/home/addPerson")
+    @ResponseBody
+    public String addPerson(String name, int age){
+
+
+        Person p = new Person(name,age);
+
+        personList.add(p);
+
+        return "%d번 사람이 추가되었습니다.".formatted(p.getId());
+
+
+
+    }
+
+    @GetMapping("/home/showPeople")
+    @ResponseBody
+    public List<Person> showPeople(){
+
+
+
+        return personList;
+    }
+
+
+
+
+
+
 
 
 }
+
+@Getter
+@Setter
+@AllArgsConstructor
+@ToString
+class Person{
+    private static int lastId;
+    private final int id;
+    private String name;
+    private int age;
+
+
+    static{
+        lastId = 0;
+
+    }
+
+    public Person(String name,int age){
+        this(++lastId,name,age);
+
+    }
+
+
+}
+
+
+
+
+
+
+
 
 
 class Article1 {
@@ -291,6 +360,12 @@ class Article1 {
                 ", articleNo=" + articleNo +
                 '}';
     }
+
+
+
+
+
+
 }
 
 
